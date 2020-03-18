@@ -1,29 +1,29 @@
 package model;
 
-import java.util.Arrays;
+import java.util.HashSet;
 
 public class Bisection {
-    private int[] vertexList1;
-    private int[] vertexList2;
+    private HashSet<Integer> vertexList1;
+    private HashSet<Integer> vertexList2;
 
-    public void newSolution(int[] v1, int[] v2){
-        this.vertexList1 = Arrays.copyOf(v1, v1.length);
-        this.vertexList2 = Arrays.copyOf(v2, v2.length);
+    public void newSolution(HashSet<Integer> v1, HashSet<Integer> v2){
+        vertexList1 = (HashSet) v1.clone();
+        this.vertexList2 = (HashSet) v2.clone();
     }
 
-    public int[] getVertexList1() {
+    public HashSet<Integer> getVertexList1() {
         return vertexList1;
     }
 
-    public int[] getVertexList2() {
+    public HashSet<Integer> getVertexList2() {
         return vertexList2;
     }
 
     @Override
     public String toString() {
         return "Bisection{" +
-                "vertexList1=" + Arrays.toString(vertexList1) +
-                ", vertexList2=" + Arrays.toString(vertexList2) +
+                "vertexList1=" + vertexList1 +
+                ", vertexList2=" + vertexList2 +
                 '}';
     }
 }
