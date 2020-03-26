@@ -1,9 +1,11 @@
 package model;
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class Graph {
-    private int[][] matrix;
+    private int[][] adjMatrix;
+    private ArrayList<Integer> adjList[];
 
     public void readGraph(File file) throws IOException {
         String line;
@@ -17,7 +19,8 @@ public class Graph {
         infoLine = line.split(" ");
         nVertex = Integer.valueOf(infoLine[1]);
         nEdges = Integer.valueOf(infoLine[2]);
-        this.matrix = new int[nVertex][nVertex];
+        this.adjMatrix = new int[nVertex][nVertex];
+        this.adjList = new ArrayList[nVertex];
         for(int i=0; i<nEdges; i++){
             line = reader.readLine();
             infoLine = line.split(" ");
@@ -26,10 +29,29 @@ public class Graph {
     }
 
     private void newEdge(int v1, int v2){
-        this.matrix[v1][v2] = 1;
+        if(this.adjList[v1] == null){
+            this.adjList[v1] = new ArrayList<Integer>();
+        }
+        this.adjList[v1].add(v2);
+        this.adjMatrix[v1][v2] = 1;
     }
 
-    public int[][] getMatrix(){
-        return this.matrix;
+    public int[][] getAdjMatrix(){
+        return this.adjMatrix;
     }
+
+    public ArrayList<Integer>[] getAdjList(){
+        return this.adjList;
+    }
+
+
+    public boolean adjacent(int v1, int v2){
+        return(getAdjMatrix()[v1][v2]==1);
+    }
+
+    public int order(){
+        return adjMatrix.length;
+    }
+    //public ArrayList<Integer> neighbors(int v) {
+    //}
 }

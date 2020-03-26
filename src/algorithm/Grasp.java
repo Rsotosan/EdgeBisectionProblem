@@ -26,28 +26,32 @@ public class Grasp implements Algorithm{
 
         //Define and initialize candidate list
         LinkedList<Candidate> candidates = new LinkedList<Candidate>();
-        for (int i=0; i<graph.getMatrix().length; i++){
+        for (int i = 0; i<graph.order(); i++){
             candidates.add(new Candidate(i));
         }
         //First cost evaluate of candidates
         evaluateCost(vertexList1, candidates);
         //Iteration for a solution
-        while(vertexList1.size() < graph.getMatrix().length / 2){
+        while(vertexList1.size() < graph.order() / 2){
             minCost = candidates.getLast().getCost();
             maxCost = candidates.getFirst().getCost();
             th = maxCost - alpha * (maxCost - minCost);
 
-            //Mejorable
+            //improvable?
             int rcl = 0;
             while(rcl < candidates.size() && candidates.get(rcl).getCost() >= th){
                 rcl++;
             }
+
+            //Get a random candidate
             Random r = new Random();
             Candidate randomCandidate = candidates.remove(r.nextInt(rcl));
             vertexList1.add(randomCandidate.getId());
+
+            //Reevaluate cost of partial candidate list
             evaluateCost(vertexList1, candidates);
         }
-        for(int i=0; i<graph.getMatrix().length; i++){
+        for(int i = 0; i<graph.order(); i++){
             if(!vertexList1.contains(i)){
                 vertexList2.add(i);
             }
@@ -57,16 +61,11 @@ public class Grasp implements Algorithm{
     }
 
     private void evaluateCost(HashSet<Integer> partialSolution, LinkedList<Candidate> candidates){
-        int[][] matrix = graph.getMatrix();
         for (Candidate c: candidates) {
             int cost = 0;
             for (Integer id: partialSolution){
-                for(int i = 0; i<matrix.length; i++){
-                    if (matrix[c.getId()][i] == 1) cost++;
-                }
-                for(int i = 0; i<matrix.length; i++){
-                    if (matrix[i][c.getId()] == 1) cost++;
-                }
+                if(graph.adjacent(c.getId(), id)) cost ++;
+                if(graph.adjacent(id, c.getId())) cost ++;
             }
             c.setCost(cost);
         }

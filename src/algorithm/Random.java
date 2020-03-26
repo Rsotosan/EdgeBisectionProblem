@@ -16,11 +16,9 @@ public class Random implements Algorithm{
 
     public Bisection generateSolution(){
         Bisection bisection = new Bisection();
-        int[][] m = graph.getMatrix();
         HashSet<Integer> v1 = new HashSet<Integer>();
-        //LinkedList<Integer> random = new Random().ints(0, m.length).distinct().limit((m.length / 2)).sorted().boxed().collect(Collectors.toCollection(LinkedList<Integer>::new));
-        HashSet<Integer> v2 = new java.util.Random().ints(0, m.length).distinct().limit((m.length / 2)).sorted().boxed().collect(Collectors.toCollection(HashSet<Integer>::new));
-        for(int i=0; i<m.length; i++){
+        HashSet<Integer> v2 = new java.util.Random().ints(0, graph.order()).distinct().limit((graph.order() / 2)).sorted().boxed().collect(Collectors.toCollection(HashSet<Integer>::new));
+        for(int i=0; i<graph.order(); i++){
             if(!v2.contains(i)){
                 v1.add(i);
             }
