@@ -52,6 +52,8 @@ public class Graph {
     public int order(){
         return adjMatrix.length;
     }
-    //public ArrayList<Integer> neighbors(int v) {
-    //}
+
+    public ArrayList<Integer> neighbors(int v) {
+        return (adjList[v]==null)? new ArrayList<Integer>() : adjList[v];
+    }
 }

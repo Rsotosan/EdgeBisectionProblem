@@ -3,6 +3,7 @@ package algorithm;
 import model.Bisection;
 import model.Graph;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Random;
@@ -63,9 +64,15 @@ public class Grasp implements Algorithm{
     private void evaluateCost(HashSet<Integer> partialSolution, LinkedList<Candidate> candidates){
         for (Candidate c: candidates) {
             int cost = 0;
+            ArrayList<Integer> neighbors = graph.neighbors(c.getId());
+            /**
             for (Integer id: partialSolution){
                 if(graph.adjacent(c.getId(), id)) cost ++;
                 if(graph.adjacent(id, c.getId())) cost ++;
+            }
+             */
+            for (int neighbor: neighbors){
+                if(partialSolution.contains(neighbor)) cost ++;
             }
             c.setCost(cost);
         }
