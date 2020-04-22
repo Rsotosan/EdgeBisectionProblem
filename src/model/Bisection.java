@@ -19,6 +19,23 @@ public class Bisection {
         return vertexList2;
     }
 
+    public boolean swap(int vertex1, int vertex2){
+        if(vertexList1.contains(vertex1) && vertexList2.contains(vertex2)){
+            vertexList1.remove(vertex1);
+            vertexList1.add(vertex2);
+            vertexList2.remove(vertex2);
+            vertexList2.add(vertex1);
+        } else if (vertexList2.contains(vertex1) && vertexList1.contains(vertex2)){
+            vertexList1.remove(vertex2);
+            vertexList1.add(vertex1);
+            vertexList2.remove(vertex1);
+            vertexList2.add(vertex2);
+        } else {
+            return false;
+        }
+        return true;
+    }
+
     @Override
     public String toString() {
         return "Bisection{" +

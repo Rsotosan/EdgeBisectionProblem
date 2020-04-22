@@ -1,10 +1,10 @@
-package constructive;
+package localSearch;
 
-public class Candidate {
+public class Node {
     private int id;
     private int cost;
 
-    public Candidate(int id) {
+    public Node(int id) {
         this.id = id;
     }
 

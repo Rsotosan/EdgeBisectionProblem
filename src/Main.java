@@ -1,8 +1,8 @@
-import algorithm.Algorithm;
-import algorithm.Grasp;
-import algorithm.Random;
+import constructive.Constructive;
+import constructive.Grasp;
 import model.Bisection;
 import model.Graph;
+import Evaluator.Evaluator;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,12 +24,11 @@ public class Main {
 
     public static void evaluator(Graph graph) throws IOException {
         Grasp grasp = new Grasp(graph);
-        Algorithm algorithm;
 
-        algorithm = new Grasp(graph);
+        grasp = new Grasp(graph);
         //algorithm = new Random(graph);
 
-        Bisection bisection = algorithm.generateSolution();
+        Bisection bisection = grasp.generateSolution();
         System.out.println(bisection.toString());
         System.out.println(Evaluator.evaluate(graph, bisection));
         //System.out.println(Evaluator.evaluateByList(graph, bisection));

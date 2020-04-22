@@ -1,3 +1,5 @@
+package Evaluator;
+
 import model.Bisection;
 import model.Graph;
 
