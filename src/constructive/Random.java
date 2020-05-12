@@ -1,4 +1,4 @@
-package algorithm;
+package constructive;
 
 import model.Bisection;
 import model.Graph;
@@ -6,7 +6,7 @@ import model.Graph;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
-public class Random implements Algorithm{
+public class Random implements Constructive {
 
     public Graph graph;
 

@@ -1,37 +1,42 @@
-import algorithm.Algorithm;
-import algorithm.Grasp;
-import algorithm.Random;
+import Evaluator.Evaluator;
+import constructive.Constructive;
+import constructive.Grasp;
+import constructive.Random;
+import localSearch.LocalSearch;
 import model.Bisection;
 import model.Graph;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         Graph graph = new Graph();
-        //graph.readGraph(new File("resources\\testGraph5V.txt"));
-        graph.readGraph(new File("resources\\hb\\nos1.mtx.rnd"));
+        graph.readGraph(new File("resources\\testGraph5V.txt"));
+        //graph.readGraph(new File("resources\\hb\\nos1.mtx.rnd"));
         //graph.readGraph(new File("resources\\hb\\bcsstk06.mtx.rnd"));
         //graph.readGraph(new File("resources\\hb\\nos3.mtx.rnd"));
-
         for (int i = 0; i < 100; i++) {
-            evaluator(graph);
+                evaluator(graph);
         }
     }
 
     public static void evaluator(Graph graph) throws IOException {
         Grasp grasp = new Grasp(graph);
-        Algorithm algorithm;
+        Constructive constructive;
 
-        algorithm = new Grasp(graph);
-        //algorithm = new Random(graph);
+        constructive = new Grasp(graph);
+        //constructive = new Random(graph);
 
-        Bisection bisection = algorithm.generateSolution();
-        System.out.println(bisection.toString());
-        System.out.println(Evaluator.evaluate(graph, bisection));
-        //System.out.println(Evaluator.evaluateByList(graph, bisection));
+        Bisection bisection = constructive.generateSolution();
+        //System.out.println(bisection.toString());
+        //System.out.println(Evaluator.evaluate(graph, bisection));
+        //System.out.println(Evaluator.Evaluator.evaluateByList(graph, bisection));
+        System.out.println("Constructive solution=" + Evaluator.evaluate(graph, bisection));
+        LocalSearch localSearch = new LocalSearch(graph, bisection);
+        bisection = localSearch.search();
+        //System.out.println(bisection.toString());
+        System.out.println("Local search solution=" + Evaluator.evaluate(graph, bisection));
+        System.out.println("------------------------------");
     }
 }

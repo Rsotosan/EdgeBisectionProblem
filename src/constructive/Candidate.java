@@ -1,4 +1,4 @@
-package algorithm;
+package constructive;
 
 public class Candidate {
     private int id;

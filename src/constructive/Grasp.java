@@ -1,4 +1,4 @@
-package algorithm;
+package constructive;
 
 import model.Bisection;
 import model.Graph;
@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Random;
 
-public class Grasp implements Algorithm{
+public class Grasp implements Constructive {
     public Graph graph;
 
     public Grasp(Graph graph){

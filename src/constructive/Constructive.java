@@ -1,9 +1,8 @@
-package algorithm;
+package constructive;
 
 import model.Bisection;
-import model.Graph;
 
-public interface Algorithm {
+public interface Constructive {
     public Bisection generateSolution();
 
 }
