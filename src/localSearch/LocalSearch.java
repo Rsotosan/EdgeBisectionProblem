@@ -25,42 +25,33 @@ public class LocalSearch {
         for(int v: bisection.getVertexList2()){
             nodes2.add(new Node(v));
         }
-        ordenateNodes(nodes1, nodes2);
         boolean noImprove = false;
         while(!noImprove) {
-            ordenateNodes(nodes1, nodes2);
+            sortNodes(nodes1, nodes2);
             noImprove = true;
             for (Node n1 : nodes1) {
-                int externalCost1 = 0;
-                int ownCost1 = 0;
+                int externalCostV1 = n1.getCost();
+                int ownCostV1 = 0;
                 for (Node auxN1 : nodes1) {
-                    if (graph.adjacent(n1.getId(), auxN1.getId()) && n1.getId() != auxN1.getId()) ownCost1++;
-                    if (graph.adjacent(auxN1.getId(), n1.getId()) && n1.getId() != auxN1.getId()) ownCost1++;
+                    if (n1.getId() != auxN1.getId() && graph.adjacent(n1.getId(), auxN1.getId())) ownCostV1++;
+                    if (n1.getId() != auxN1.getId() && graph.adjacent(auxN1.getId(), n1.getId())) ownCostV1++;
                 }
                 for (Node n2 : nodes2) {
-                    if (graph.adjacent(n1.getId(), n2.getId())) externalCost1++;
-                    if (graph.adjacent(n2.getId(), n1.getId())) externalCost1++;
-                }
-                for (Node n2 : nodes2) {
-                    int externalCost2 = 0;
-                    int ownCost2 = 0;
-                    for (Node auxN1 : nodes1) {
-                        if (graph.adjacent(n2.getId(), auxN1.getId())) externalCost2++;
-                        if (graph.adjacent(auxN1.getId(), n2.getId())) externalCost2++;
-                    }
+                    int externalCostV2 = n2.getCost();
+                    int ownCostV2 = 0;
                     for (Node auxN2 : nodes2) {
-                        if (graph.adjacent(n2.getId(), auxN2.getId())) ownCost2++;
-                        if (graph.adjacent(auxN2.getId(), n2.getId())) ownCost2++;
+                        if (n2.getId() != auxN2.getId() && graph.adjacent(n2.getId(), auxN2.getId())) ownCostV2++;
+                        if (n2.getId() != auxN2.getId() && graph.adjacent(auxN2.getId(), n2.getId())) ownCostV2++;
                     }
                     if (graph.adjacent(n1.getId(), n2.getId())){
-                        externalCost1--;
-                        externalCost2--;
+                        externalCostV1--;
+                        externalCostV2--;
                     }
                     if (graph.adjacent(n2.getId(), n1.getId())){
-                        externalCost1--;
-                        externalCost2--;
+                        externalCostV1--;
+                        externalCostV2--;
                     }
-                    if (ownCost1 + ownCost2 < externalCost1 + externalCost2) {
+                    if (ownCostV1 + ownCostV2 < externalCostV1 + externalCostV2) {
                         swapNodes(n1, n2, nodes1, nodes2);
                         noImprove = false;
                         break;
@@ -76,13 +67,19 @@ public class LocalSearch {
 
 
 
-    private void ordenateNodes(ArrayList<Node> nodes1, ArrayList<Node> nodes2){
+    private void sortNodes(ArrayList<Node> nodes1, ArrayList<Node> nodes2){
         evaluateCost(nodes1,nodes2);
         nodes1.sort((Node n1, Node n2) -> n2.getCost() - n1.getCost());
         nodes2.sort((Node n1, Node n2) -> n2.getCost() - n1.getCost());
     }
 
     private void evaluateCost(ArrayList<Node> nodes1, ArrayList<Node> nodes2){
+        for (Node n1: nodes1) {
+            n1.setCost(0);
+        }
+        for(Node n2: nodes2){
+            n2.setCost(0);
+        }
         for (Node n1: nodes1) {
             for(Node n2: nodes2){
                 if(graph.adjacent(n1.getId(), n2.getId())){
