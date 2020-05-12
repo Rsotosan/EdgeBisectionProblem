@@ -3,8 +3,10 @@ import constructive.Constructive;
 import constructive.Grasp;
 import constructive.Random;
 import localSearch.LocalSearch;
+
 import model.Bisection;
 import model.Graph;
+import Evaluator.Evaluator;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,10 +14,10 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) throws IOException {
         Graph graph = new Graph();
-        graph.readGraph(new File("resources\\testGraph5V.txt"));
+        //graph.readGraph(new File("resources\\testGraph5V.txt"));
         //graph.readGraph(new File("resources\\hb\\nos1.mtx.rnd"));
         //graph.readGraph(new File("resources\\hb\\bcsstk06.mtx.rnd"));
-        //graph.readGraph(new File("resources\\hb\\nos3.mtx.rnd"));
+        graph.readGraph(new File("resources\\hb\\nos3.mtx.rnd"));
         for (int i = 0; i < 100; i++) {
                 evaluator(graph);
         }

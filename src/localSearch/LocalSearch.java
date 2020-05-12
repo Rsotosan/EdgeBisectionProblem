@@ -10,12 +10,10 @@ public class LocalSearch {
     private Graph graph;
     private Bisection bisection;
 
-    public LocalSearch(Graph graph, Bisection bisection){
+    public LocalSearch(Graph graph, Bisection bisection) {
         this.graph = graph;
         this.bisection = bisection;
     }
-
-
 
     public Bisection search(){
         int solutionValue = Evaluator.evaluate(graph, bisection);
@@ -113,5 +111,4 @@ public class LocalSearch {
             nodes2.add(n2);
         }
     }
-
 }
