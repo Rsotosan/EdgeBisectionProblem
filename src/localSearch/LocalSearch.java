@@ -16,7 +16,6 @@ public class LocalSearch {
     }
 
     public Bisection search(){
-        int solutionValue = Evaluator.evaluate(graph, bisection);
         ArrayList<Node> nodes1 = new ArrayList<Node>();
         ArrayList<Node> nodes2 = new ArrayList<Node>();
         for(int v: bisection.getVertexList1()){
