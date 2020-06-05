@@ -8,7 +8,7 @@ import localSearch.TabuSearch;
 import model.Bisection;
 import model.Graph;
 import Evaluator.Evaluator;
-git st
+
 import java.io.File;
 import java.io.IOException;
 
