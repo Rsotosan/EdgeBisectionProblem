@@ -21,6 +21,14 @@ public class TabuSearch {
         LinkedList<Node> nodeQueue = new LinkedList<>();
         ArrayList<Node> nodes1 = new ArrayList<>();
         ArrayList<Node> nodes2 = new ArrayList<>();
+        int costChange;
+        int minCostChange = Integer.MAX_VALUE;
+        int maxIterations = 5;
+        int iterationCounter = 0;
+        Node potentialNode1 = null;
+        Node potentialNode2 = null;
+        Bisection potentialSolution = null;
+        int potentialCost = 0;
         for(int v: bisection.getVertexList1()){
             nodes1.add(new Node(v));
         }
@@ -55,20 +63,43 @@ public class TabuSearch {
                                 externalCostV1--;
                                 externalCostV2--;
                             }
-                            if (ownCostV1 + ownCostV2 < externalCostV1 + externalCostV2) {
+                            costChange = (ownCostV1 + ownCostV2) - (externalCostV1 + externalCostV2);
+                            if (costChange < 0) {
                                 swapNodes(n1, n2, nodes1, nodes2);
                                 addNodes(nodeQueue, n1, n2, tenure);
                                 noImprove = false;
                                 break;
+                            } else if(costChange < minCostChange) {
+                                potentialNode1 = n1;
+                                potentialNode2 = n2;
                             }
                         }
                     }
                     if (!noImprove) {
                         break;
                     }
-
                 }
             }
+            if(noImprove && iterationCounter < maxIterations) {
+                if(potentialSolution == null){
+                    potentialSolution = new Bisection();
+                    potentialSolution.newSolution(bisection.getVertexList1(), bisection.getVertexList2());
+                    potentialCost = Evaluator.evaluate(graph,potentialSolution);
+                }
+                swapNodes(potentialNode1, potentialNode2, nodes1, nodes2);
+                addNodes(nodeQueue, potentialNode1, potentialNode2, tenure);
+                if(Evaluator.evaluate(graph,bisection) < potentialCost){
+                    potentialSolution = new Bisection();
+                    potentialSolution.newSolution(bisection.getVertexList1(), bisection.getVertexList2());
+                    potentialCost = Evaluator.evaluate(graph,potentialSolution);
+                    iterationCounter = 0;
+                }
+                noImprove = false;
+                iterationCounter++;
+            }
+        }
+        if(potentialCost < Evaluator.evaluate(graph,bisection)){
+            bisection = potentialSolution;
         }
         return bisection;
     }

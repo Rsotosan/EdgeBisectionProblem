@@ -8,7 +8,7 @@ import localSearch.TabuSearch;
 import model.Bisection;
 import model.Graph;
 import Evaluator.Evaluator;
-
+git st
 import java.io.File;
 import java.io.IOException;
 
@@ -17,8 +17,8 @@ public class Main {
         Graph graph = new Graph();
         //graph.readGraph(new File("resources\\testGraph5V.txt"));
         //graph.readGraph(new File("resources\\hb\\nos1.mtx.rnd"));
-        //graph.readGraph(new File("resources\\hb\\bcsstk06.mtx.rnd"));
-        graph.readGraph(new File("resources\\hb\\nos3.mtx.rnd"));
+        graph.readGraph(new File("resources\\hb\\bcsstk06.mtx.rnd"));
+        //graph.readGraph(new File("resources\\hb\\nos3.mtx.rnd"));
         for (int i = 0; i < 100; i++) {
                 evaluator(graph);
         }
@@ -45,9 +45,10 @@ public class Main {
         System.out.println("Local search solution=" + Evaluator.evaluate(graph, bisection));
 
         TabuSearch tabuSearch = new TabuSearch(graph, bisection2);
-        bisection2 = tabuSearch.search(10);
+        bisection2 = tabuSearch.search(5);
         //System.out.println(bisection.toString());
         System.out.println("Tabu search solution=" + Evaluator.evaluate(graph, bisection2));
         System.out.println("------------------------------");
     }
 }
+
